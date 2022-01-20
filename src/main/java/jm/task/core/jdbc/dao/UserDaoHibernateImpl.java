@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -91,8 +92,9 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = Util.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            //Можно ли здесь тоже использовать SQL? По заданию не понятно
-            session.createSQLQuery("TRUNCATE TABLE USER").executeUpdate();
+            Query query = session.createQuery("DELETE FROM User e WHERE e.id > 0");
+            query.executeUpdate();
+            //session.createSQLQuery("TRUNCATE TABLE USER").executeUpdate();
             transaction.commit();
             System.out.println("Таблица User очищена");
         } catch (Exception e) {
