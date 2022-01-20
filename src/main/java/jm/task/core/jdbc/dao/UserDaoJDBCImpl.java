@@ -16,13 +16,13 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            System.out.println("we here");
             statement.executeUpdate("CREATE TABLE User ("
                     + "id BIGINT NOT NULL AUTO_INCREMENT,"
                     + "name VARCHAR(45), "
                     + "lastName VARCHAR(45), "
                     + "age TINYINT, "
                     + "PRIMARY KEY(id));");
+            System.out.println("Таблица User успешно создана");
         } catch (SQLSyntaxErrorException e) {
             System.out.println("Такая таблица уже существует");
         } catch (SQLException e) {
@@ -33,6 +33,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     public void dropUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("DROP TABLE kata113.user;");
+            System.out.println("Таблица User удалена");
         } catch (SQLSyntaxErrorException e) {
             System.out.println("Такая таблица не существует");
         } catch (SQLException e) {
