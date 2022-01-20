@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -83,8 +84,9 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return Util.getSessionFactory().openSession().createQuery("From User").list();
-        // сырой тип здесь - это плохо?
+        TypedQuery<User> userTypedQuery = Util.getSessionFactory().
+                openSession().createQuery("From User", User.class);
+        return userTypedQuery.getResultList();
     }
 
     @Override
